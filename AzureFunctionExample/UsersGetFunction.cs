@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -11,23 +9,18 @@ using AzureFunctionExample.DataBase;
 
 namespace AzureFunctionExample
 {
-    public static class UserGet
+    public static class UsersGetFunction
     {
-        [FunctionName("UserGet")]
+        [FunctionName("UsersGetFunction")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "UsersGet/{id}")] HttpRequest req,
-            Guid id,
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = "UsersGet")] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var user = Db.GetUserById(id);
-            var json = JsonConvert.SerializeObject(new
-            {
-                user = user
-            });
+            var json = JsonConvert.SerializeObject(new { users = Db.GetUsers() });
 
-            return (ActionResult)new OkObjectResult(json);
+            return new OkObjectResult(json);
         }
     }
 }

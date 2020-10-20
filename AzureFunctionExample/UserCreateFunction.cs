@@ -11,11 +11,11 @@ using AzureFunctionExample.DataBase;
 
 namespace AzureFunctionExample
 {
-    public static class UserCreate
+    public static class UserCreateFunction
     {
-        [FunctionName("UserCreate")]
+        [FunctionName("UserCreateFunction")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "UserCreate")] HttpRequest req,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
